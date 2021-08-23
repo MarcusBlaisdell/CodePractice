@@ -15,6 +15,7 @@ Don't forget the space after the closing parentheses!
 // Function: create_phone_number:
 // They are being tricky by passing the digits in as integers
 // so I have to add 48 to them to get them to be the correct ASCII values:
+// This is how I did it first:
 void create_phone_number(unsigned char phnum[], const unsigned char theNum[])
 {
   phnum[0] = '(';
@@ -34,10 +35,22 @@ void create_phone_number(unsigned char phnum[], const unsigned char theNum[])
   phnum[14] = '\0';
 } // end function create_phone_number
 
+// Function: create_phone_number2
+// This is how i did it after I passed the test on Code Wars
+// and learned about sprintf:
+void create_phone_number2(char phnum[], const unsigned char theNum[])
+{
+  std::sprintf (phnum, "(%d%d%d) %d%d%d-%d%d%d%d", theNum[0], theNum[1], theNum[2], theNum[3], theNum[4], theNum[5], theNum[6], theNum[7], theNum[8], theNum[9]);
+
+} // end function create_phone_number2
+
 int main(int argv, char *argc[])
 {
   unsigned char phnum[15];
+  unsigned char phnum2[15];
 
   create_phone_number(phnum, (const unsigned char[]){1,2,3,4,5,6,7,8,9,0});
   std::cout << phnum << std::endl;
+  create_phone_number(phnum2, (const unsigned char[]){1,2,3,4,5,6,7,8,9,0});
+  std::cout << phnum2 << std::endl;
 }
