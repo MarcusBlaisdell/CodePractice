@@ -165,8 +165,8 @@ void dotest(char** lstOfArt, int szlst, char** categories, int szcat, char* expr
     //char* sact = getInventory(lstOfArt, szlst, categories, szcat);
     char* sact = getInventory(lstOfArt, szlst, categories, szcat);
 
-    printf("before comp - sact:%s:\n", sact);
-    printf("before comp - expr:%s:\n", expr);
+    //printf("before comp - sact:%s:\n", sact);
+    //printf("before comp - expr:%s:\n", expr);
     //int theComp = strcmp("(A : 200) - (B : 1140)", expr);
     //printf("theComp: %d\n", theComp);
 
@@ -178,9 +178,13 @@ void dotest(char** lstOfArt, int szlst, char** categories, int szcat, char* expr
     {
       printf("Error. Expected \n%s\n but got \n%s\n", expr, sact);
     }
+    else
+    {
+      printf("Pass\n");
+    }
 
-    printf("after comp - sact:%s:\n", sact);
-    printf("after comp - expr:%s:\n", expr);
+    //printf("after comp - sact:%s:\n", sact);
+    //printf("after comp - expr:%s:\n", expr);
 
     //cr_assert_str_eq(sact, expr, "");
     //if (strcmp(sact, "") != 0) {free(sact); sact = NULL;}
@@ -191,30 +195,44 @@ int main (int argv, char *argc[])
   char * L[] = {"ABART 20", "CDXEF 50", "BKWRK 25", "BTSQZ 89", "DRTYM 60"};
   char * M[] = {"A", "B", "C", "W"};
 
+  char * fix1 = "abc";
+  char * fix2 = "abc";
+  //strcmp(fix1, fix2);
+  strcmp(fix1, "abc");
+  //strcmp("abc", fix2);
+  //strcmp("abc", "abc");
+
   //char* sact = stockSummary(lstOfArt, szlst, categories, szcat);
   char *theList1 = getInventory(L, 5, M, 4);
+  char * test1 = "(A : 20) - (B : 114) - (C : 50) - (W : 0)";
   //const char *theList1 = stockSummary(L, 5, M, 4);
 
   printf("main - theList1: %s\n", theList1);
+  dotest(L, 5, M, 4, test1);
 
-  char* art[5] = {"ABAR 200", "CDXE 500", "BKWR 250", "BTSQ 890", "DRTY 600"};
-  char* cd[2] = {"A", "B"};
-  dotest(art, 5, cd, 2, "(A : 200) - (B : 1140)");
-  /*
+  //char* art[5] = {"ABAR 200", "CDXE 500", "BKWR 250", "BTSQ 890", "DRTY 600"};
+  //char* cd[2] = {"A", "B"};
+  //dotest(art, 5, cd, 2, "(A : 200) - (B : 1140)");
+
   char* art[5] = {"ABAR 200", "CDXE 500", "BKWR 250", "BTSQ 890", "DRTY 600"};
   char* cd[2] = {"A", "B"};
 
   char *theList2 = getInventory(art, 5, cd, 2);
   //const char *theList2 = stockSummary(art, 5, cd, 2);
+  //char * test2 = "(A : 200) - (B : 1140)";
 
   printf("main - theList2: %s\n", theList2);
-  */
+  dotest(art, 5, cd, 2, "(A : 200) - (B : 1140)");
 
   char* art2[0] = {};
   char* cd2[4] = {"B", "R", "D", "X"};
 
   char *theList3 = getInventory(art2, 0, cd2, 4);
+
+  char * test3 = "";
+
   printf("main - theList3: %s\n", theList3);
+  dotest(art2, 0, cd2, 4, test3);
 
   return 1;
 }
