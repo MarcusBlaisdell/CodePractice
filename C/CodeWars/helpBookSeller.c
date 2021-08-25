@@ -89,7 +89,8 @@ char * getInventory(char ** L, int sizeL, char ** M, int sizeM)
   int theVal = 0;
   int counts[26] = {0}; // each position corresponds to a letter of the alphabet
   //char static theList[500] = "";
-  char theList[500] = "";
+  //char theList[500] = "";
+  char *theList = malloc(500);
 
   for (int i = 0; i < sizeL; i++)
   {
