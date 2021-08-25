@@ -73,12 +73,16 @@ void testValid(char theNum[])
 int main (int argv, char *argc[])
 {
   int i = 0;
-  //char theNum[6][15] = {"(123) 456-7890\0","(123)456-7890\0","123 456-7890\0","(123) 456.7890\0","(a23) 456-7890\0","(1b3) 456-7890\0"};
-  char * theNum[] = {"(123) 456-7890", "(1111)555 2345", "(098) 123 4567", "(123)456-7890", "abc(123)456-7890", "(123)456-7890abc", "abc(123)456-7890abc", "abc(123) 456-7890", "(123) 456-7890abc", "abc(123) 456-7890abc"};
-
-  /*
-  ,
-  */
+  char * theNum[] = {"(123) 456-7890",
+                      "(1111)555 2345",
+                      "(098) 123 4567",
+                      "(123)456-7890",
+                      "abc(123)456-7890",
+                      "(123)456-7890abc",
+                      "abc(123)456-7890abc",
+                      "abc(123) 456-7890",
+                      "(123) 456-7890abc",
+                      "abc(123) 456-7890abc"};
 
   for (i = 0; i < 10; i++)
   {
@@ -87,3 +91,71 @@ int main (int argv, char *argc[])
 
   return 1;
 }
+/*
+Best Practices solutions from the website:
+
+bool valid_phone_number(const char* number)
+{
+   int frmt_len = strlen("(123) 456-7890");
+   if (strlen(number) == frmt_len)
+   {
+      char b[frmt_len];
+      if (sscanf(number, "%1[(]%3[0-9]%1[)]%1[ ]%3[0-9]%1[-]%4[0-9]%1s", b, b, b, b, b, b, b, b) == 7) return true;
+   }
+   return false;
+}
+
+bool valid_phone_number(const char *number) {
+  char format[] = "(xxx) xxx-xxxx";
+
+  for (int i = 0; i < 15; i++)
+    if ((number[i] != format[i]) && ((format[i] != 'x') || ((number[i] < '0') || (number[i] > '9'))))
+      return false;
+
+  return true;
+}
+
+#include <ctype.h>
+
+bool valid_phone_number(const char* number) {
+#define SCAN(c)   if (*number++ != c) { return false; }
+#define SCAN_D(n) for (int i = 0; i < n; i += 1) { if (!isdigit(*number++)) { return false; } }
+    SCAN('(');
+    SCAN_D(3);
+    SCAN(')');
+    SCAN(' ');
+    SCAN_D(3);
+    SCAN('-');
+    SCAN_D(4);
+    SCAN('\0');
+    return true;
+}
+
+#include <regex.h>
+
+bool valid_phone_number(const char* number) {
+  regex_t regex;
+  if (regcomp(&regex, "^\([0-9][0-9][0-9]) [0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]$", 0)) return false;
+  int status = regexec(&regex, number, 0, 0, 0);
+  regfree(&regex);
+  return status == 0;
+}
+
+#include <regex.h>
+#include <stddef.h>
+
+bool valid_phone_number(const char* number) {
+  regex_t regex;
+  int reti;
+
+  reti = regcomp(&regex, "^([[:digit:]]\\{3\\}) [[:digit:]]\\{3\\}-[[:digit:]]\\{4\\}$", 0);
+
+  reti = regexec(&regex, number, 0, NULL, 0);
+  if (!reti) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+*/

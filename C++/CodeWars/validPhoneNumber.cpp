@@ -36,7 +36,7 @@ int isValid (std::string theNum)
 
     // if we did not fail the for loop, we pass the tests, return pass:
     return 1;
-    
+
   } // end if parentheses, space, dash
   else
   {
