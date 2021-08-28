@@ -34,6 +34,42 @@ Notes:
 #include <stdlib.h>
 #include <string.h>
 
+// function: bubbleSort
+char ** bubbleSort(char ** returnArray, int size)
+{
+  if (size > 1)
+  {
+    int i = 0, j = 1;
+    char * swap;
+
+    for (i = 0; i < size - 1; i++)
+    {
+      for (j = i+1; j < size; j++)
+      {
+        // if word on right is less, alphabetically,
+        // than the word on the left, swap them:
+        if (strcmp(returnArray[j], returnArray[i]) < 0)
+        {
+          swap = returnArray[i];
+          returnArray[i] = returnArray[j];
+          returnArray[j] = swap;
+
+        } // end if right less than left
+
+      } // end inner loop
+
+    } // end outer loop
+
+  } // end only sort if more than one element
+  else
+  {
+    return returnArray;
+  } // if only one element, return array as-is
+
+  return returnArray;
+
+} // end function bubbleSort
+
 // Function sortArray:
 char** sortArray(char** returnArray, int size)
 {
@@ -128,7 +164,8 @@ char** inArray(char* array1[], int sz1, char* array2[], int sz2, int* lg)
 
     } // end for each substring in array 1 loop
 
-    return sortArray(returnArray, *lg);
+    //return sortArray(returnArray, *lg);
+    return bubbleSort(returnArray, *lg);
 
 } // end function inArray
 
@@ -195,5 +232,38 @@ int main(int argv, char* argc[])
     char* arr2b[8] = { "lively", "alive", "harp", "sharp", "armstrong", "codewars", "cod", "code" };
     dotest(arr1b, 7, arr2b, 8, "{'cod','code','ewar','wars'}");
 
+    char* arr1c[8] = { "cod", "code", "wars", "ewar", "pillow", "bed", "phht", "ar" };
+    char* arr2c[8] = { "lively", "alive", "harp", "sharp", "armstrong", "codewars", "cod", "code" };
+    dotest(arr1c, 8, arr2c, 8, "{'ar','cod','code','ewar','wars'}");
+
     return 1;
 }
+
+/*
+Best Practices solution from site:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int compare(const void * a, const void * b);
+
+// sz1: size of array1, sz2: size of array2, lg: size of the returned array
+char** inArray(char* array1[], int sz1, char* array2[], int sz2, int* lg) {
+    char** result = (char **) malloc(0 * sizeof(char *));
+    int cnt = 0;
+    for (int i = 0; i < sz1; i++) {
+        for (int j = 0; j < sz2; j++) {
+            if (strstr(array2[j], array1[i])) {
+                result = (char **) realloc(result, (cnt + 1) * sizeof(char *));
+                result[cnt] = array1[i];
+                cnt++;
+                break;
+            }
+        }
+    }
+    *lg = cnt;
+    qsort(result, cnt, sizeof(const char *), compare);
+    return result;
+}
+*/

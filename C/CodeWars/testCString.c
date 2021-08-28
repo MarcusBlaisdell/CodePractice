@@ -34,6 +34,9 @@ void testInitialize()
   printf("A = %d\n", testString[1] - testString[0]);
 }
 
+// Function: testReturn
+// test returning a char array from a function
+// Should go out of scope and be unavailable
 char * testReturn()
 {
   char buildString[100] = "";
@@ -42,25 +45,36 @@ char * testReturn()
   sprintf(buildString, "%s", returnString);
 
   return buildString;
-}
+} // end function testReturn
 
+// Function testReturn2
+// test returning the string that was passed to the function
 char * testReturn2(char * theString)
 {
   return theString;
-}
+} // end function testReturn2
 
+// Function: testTest
+// a function to test the testReturn function
+// which returns a char array that was created inside
+// the function, should fail since memory is out of scope
 char * testTest(char * expr)
 {
   char * sact = testReturn();
   if (strcmp(sact, expr) != 0)
   {
-    printf("Expected %s, got %s\n", expr, sact);
+    printf("[testTest] - Expected %s, got %s\n", expr, sact);
   }
   else
   {
-    printf("Match!\n");
+    printf("[testTest] - Match!\n");
   }
-}
+  return "Fail";
+} // end function testTest
+
+/*
+*** Main ***
+*/
 
 int main(int argv, char *argc[])
 {
@@ -69,7 +83,7 @@ int main(int argv, char *argc[])
   char mySecond[] = "a";
   //myString = myString + 'A';
   strcat(myString, mySecond);
-  strcat(myString, "0" + 1);
+  //strcat(myString, "0" + 1);
   //strcat(myFirst, mySecond);
 
   printf("myString: %s\n", myString);
@@ -78,7 +92,7 @@ int main(int argv, char *argc[])
 
   testInitialize();
   char * returnString = testReturn();
-  printf("returnString: %s\n", returnString);
+  printf("returnString, s/b \"I have returned\": %s\n", returnString);
 
   char * string1 = testReturn();
   char * string2 = "I have returned";
@@ -93,6 +107,13 @@ int main(int argv, char *argc[])
 
   char * string4 = "I have returned!";
   testTest(string4);
+
+  //char * spellCheck1 = "alpha";
+  //char * spellCheck2 = "beta";
+  char * spellCheck1 = "wars";
+  char * spellCheck2 = "ar";
+  // ar, cod, code, ewar, wars
+  printf("alpha, beta: %d, beta, alpha: %d\n", strcmp(spellCheck1, spellCheck2), strcmp(spellCheck2, spellCheck1));
 
   return 1;
 }
